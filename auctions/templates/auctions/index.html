@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{ title }}</h2>
+
+    {% for shangpin in shangpins %}
+
+    <table class="table table-bordered">
+        <td width="400px">
+            <img src="/img/{{ shangpin.pic }}" class="img-responsive" alt="响应式图像" width="400px">
+        </td>
+        <td>
+            <h5 class="media-heading">
+                <a href="{% url 'inf' shangpin.ID %}" style="color: black;">{{ shangpin.name }}</a>
+            </h5>
+            <h6>Price: $ {{ shangpin.price }}</h6>
+            <p class="text-muted">Created {{ shangpin.time }}</p>
+            <p class="content text-muted">{{ shangpin.content }}</p>
+
+        </td>
+    </table>
+    <div style="line-height: 50px;"></div>
+    {% endfor %}
+
+{% endblock %}
