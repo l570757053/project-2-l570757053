@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{ shangpin.name }}</h2>
+    <span class="badge badge-secondary">{{ shangpin.kind }}</span>
+
+    <div style="padding-top: 20px;"><img src="/img/{{ shangpin.pic }}" class="img-responsive" alt="响应式图像" width="500px"></div>
+    <div>{{shangpin.content}}</div>
+    <h5>price:${{shangpin.price}}</h5>
+    <div>出价人：{{shangpin.user}}</div>
+
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'chujia' shangpin.ID %}" method="post"style="padding-top: 50px;padding-bottom: 50px;">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="text" name="price" placeholder="商品价格">
+        </div>
+        <input class="btn btn-primary" type="submit" value="出价">
+    </form>
+    <a href="{% url 'endsp' shangpin.ID%}"><input class="btn btn-primary" type="submit" value="结束拍卖" > </a>
+    <a href="{% url 'scsp' shangpin.ID%}"><input class="btn btn-primary" type="submit" value="收藏" ></a>
+    {% endif %}
+
+    <form action="{% url 'createpl' shangpin.ID%}" method="post" style="padding-top: 50px;padding-bottom: 50px;">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="text" name="text" placeholder="请输入你的评论">
+        </div>
+        <input class="btn btn-primary" type="submit" value="发表">
+    </form>
+
+
+
+    {% for pinglun in pingluns %}
+    <table class="table table-bordered" >
+        <thead>
+            <th><div>用户名：{{pinglun.user}}</div></th>
+        </thead>
+        <tbody>
+            <tr><td><div style="height: 100px;">{{pinglun.text}}</div></td></tr>
+            <tr><td><div style="text-align: right;" >{{pinglun.time}}</div></td></tr>
+        </tbody>
+    </table>
+
+
+    {% endfor %}
+
+
+{% endblock %}
